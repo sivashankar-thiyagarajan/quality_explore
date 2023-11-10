@@ -1,0 +1,129 @@
+# define open api 3.0 spec for a customer management module in CRM system
+# define crud operations for a customer entity
+# define customer entity and error response
+
+
+openapi: 3.0.1
+info:
+  title: Customer Management
+  description: Customer Management Module in CRM System
+  version: 1.0.0
+  servers:
+    - url: http://localhost:8080
+      description: Local server
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+      paths:
+
+        /customers:
+          get:
+            summary: get all customers
+            operationId: getCustomers
+            tags:
+              - customers
+            responses:
+              '200':
+                description: get all customers
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Customer'
+          post:
+            summary: create a new customer
+            operationId: createCustomer
+            tags:
+              - customers
+            requestBody:
+              description: customer object
+              required: true
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Customer'
+            responses:
+              '200':
+                description: created a new customer
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Customer'
+            delete:
+              summary: delete a customer
+              operationId: deleteCustomer
+              tags:
+                - customers
+              parameters:
+                - name: customerId
+                  in: path
+                  description: customer id
+                  required: true
+                  schema:
+                    type: string
+              responses:
+                '200':
+                  description: deleted a customer
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/Customer'
+
+
+  components:
+    schemas:
+      Customer:
+        type: object
+        required:
+          - customerId
+          - firstName
+          - lastName
+          - email
+          - phone
+          - address
+        properties:
+          customerId:
+            type: string
+            description: customer id
+          firstName:
+            type: string
+            description: first name
+          lastName:
+            type: string
+            description: last name
+          email:
+            type: string
+            description: email
+          phone:
+            type: string
+            description: phone
+          address:
+            type: string
+            description: address
+        example:
+          customerId: 1
+          firstName: John
+          lastName: Doe
+          email:
+      phone: 1234567890
+        address: 123 Main St, San Francisco, CA 94101
+        Error:
+            type: object
+            required:
+                - code
+                - message
+            properties:
+                code:
+                type: integer
+                format: int32
+                description: error code
+                message:
+                type: string
+                description: error message
+            example:
+                code: 400
+                message: Bad Request
+
+
+
