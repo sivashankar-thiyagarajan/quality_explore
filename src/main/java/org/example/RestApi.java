@@ -19,7 +19,6 @@ public class RestApi {
     @Autowired
     private ItemRepository repository;
 
-
     @GetMapping
     public Iterable<Item> getAll(){
         return repository.findAll();
